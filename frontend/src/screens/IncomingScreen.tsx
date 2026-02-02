@@ -1,5 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import { api } from "../api/client";
+import { Colors } from "../utils/theme";
+import { Sizes } from "../utils/sizes";
 
 export function IncomingScreen({ challengeId, onResponse }: { challengeId: string, onResponse: (accepted: boolean) => void }) {
     const respond = async (accepted: boolean) => {
@@ -44,45 +46,45 @@ export function IncomingScreen({ challengeId, onResponse }: { challengeId: strin
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#000",
+        backgroundColor: Colors.backgroundDark,
         justifyContent: "space-between",
         alignItems: "center",
-        paddingVertical: 50,
+        paddingVertical: Sizes.spacing.huge,
     },
     header: {
         alignItems: "center",
-        marginTop: 40,
+        marginTop: Sizes.spacing.xxl,
     },
     label: {
-        color: "#94a3b8",
-        fontSize: 14,
+        color: Colors.textMuted,
+        fontSize: Sizes.font.sm,
         letterSpacing: 4,
-        marginBottom: 8,
+        marginBottom: Sizes.spacing.sm,
     },
     id: {
-        color: "#fff",
-        fontSize: 32,
+        color: Colors.text,
+        fontSize: Sizes.font.xl,
         fontWeight: "300",
     },
     centerCircle: {
         width: 150,
         height: 150,
         borderRadius: 75,
-        backgroundColor: "#1e293b",
+        backgroundColor: Colors.card,
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 1,
-        borderColor: "#334155",
+        borderColor: Colors.cardBorder,
     },
     icon: {
-        fontSize: 60,
+        fontSize: Sizes.font.huge,
     },
     footer: {
         flexDirection: "row",
         width: "100%",
         justifyContent: "space-evenly",
-        paddingHorizontal: 20,
-        marginBottom: 40,
+        paddingHorizontal: Sizes.spacing.md,
+        marginBottom: Sizes.spacing.xxl,
     },
     button: {
         width: 110,
@@ -91,20 +93,20 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         elevation: 10,
-        shadowColor: "#000",
+        shadowColor: Colors.backgroundDark,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 4.65,
     },
     acceptButton: {
-        backgroundColor: "#22c55e",
+        backgroundColor: Colors.primary,
     },
     declineButton: {
-        backgroundColor: "#ef4444",
+        backgroundColor: Colors.secondary,
     },
     buttonText: {
-        color: "#fff",
+        color: Colors.text,
         fontWeight: "600",
-        fontSize: 16,
+        fontSize: Sizes.font.base,
     },
 });

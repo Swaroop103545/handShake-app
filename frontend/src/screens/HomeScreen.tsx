@@ -1,6 +1,8 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform } from "react-native";
 import { api } from "../api/client";
 import { useState } from "react";
+import { Colors } from "../utils/theme";
+import { Sizes } from "../utils/sizes";
 
 export function HomeScreen({ userId }: { userId: string }) {
     const [target, setTarget] = useState("");
@@ -35,7 +37,7 @@ export function HomeScreen({ userId }: { userId: string }) {
                     <TextInput
                         style={styles.input}
                         placeholder="e.g. Player2"
-                        placeholderTextColor="#475569"
+                        placeholderTextColor={Colors.textSubtle}
                         onChangeText={setTarget}
                         value={target}
                     />
@@ -57,62 +59,62 @@ export function HomeScreen({ userId }: { userId: string }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#0f172a",
+        backgroundColor: Colors.background,
     },
     inner: {
         flex: 1,
         justifyContent: "center",
-        padding: 24,
+        padding: Sizes.spacing.lg,
     },
     header: {
-        marginBottom: 40,
+        marginBottom: Sizes.spacing.xxl,
     },
     greeting: {
-        fontSize: 32,
+        fontSize: Sizes.font.xl,
         fontWeight: "bold",
         color: "#f8fafc",
-        marginBottom: 8,
+        marginBottom: Sizes.spacing.sm,
     },
     subtitle: {
-        fontSize: 16,
-        color: "#94a3b8",
+        fontSize: Sizes.font.base,
+        color: Colors.textMuted,
     },
     inputContainer: {
-        backgroundColor: "#1e293b",
-        padding: 24,
-        borderRadius: 16,
+        backgroundColor: Colors.card,
+        padding: Sizes.spacing.lg,
+        borderRadius: Sizes.radius.lg,
         borderWidth: 1,
-        borderColor: "#334155",
+        borderColor: Colors.cardBorder,
     },
     label: {
-        color: "#22c55e",
-        fontSize: 12,
+        color: Colors.primary,
+        fontSize: Sizes.font.xs,
         fontWeight: "700",
         letterSpacing: 1.5,
-        marginBottom: 12,
+        marginBottom: Sizes.spacing.base,
     },
     input: {
-        backgroundColor: "#0f172a",
-        borderRadius: 8,
-        padding: 16,
-        color: "#fff",
-        fontSize: 16,
-        marginBottom: 20,
+        backgroundColor: Colors.background,
+        borderRadius: Sizes.radius.sm,
+        padding: Sizes.spacing.base,
+        color: Colors.text,
+        fontSize: Sizes.font.base,
+        marginBottom: Sizes.spacing.md,
         borderWidth: 1,
-        borderColor: "#475569",
+        borderColor: Colors.inputBorder,
     },
     button: {
-        backgroundColor: "#22c55e",
-        borderRadius: 8,
-        padding: 16,
+        backgroundColor: Colors.primary,
+        borderRadius: Sizes.radius.sm,
+        padding: Sizes.spacing.base,
         alignItems: "center",
     },
     buttonDisabled: {
         opacity: 0.5,
     },
     buttonText: {
-        color: "#fff",
-        fontSize: 18,
+        color: Colors.text,
+        fontSize: Sizes.font.lg,
         fontWeight: "bold",
     },
 });

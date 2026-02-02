@@ -1,90 +1,3 @@
-// const express = require("express");
-// const http = require("http");
-// const { Server } = require("socket.io");
-// const cors = require("cors");
-
-// const app = express();
-// app.use(cors());
-// app.use(express.json());
-
-// const server = http.createServer(app);
-// const io = new Server(server, {
-//     cors: { origin: "*" },
-// });
-
-// /**
-//  * In-memory store
-//  * challengeId -> { from, to, status }
-//  */
-// const challenges = {};
-// const userSockets = {}; // userId -> socketId
-
-// io.on("connection", (socket) => {
-//     socket.on("register", (userId) => {
-//         userSockets[userId] = socket.id;
-//     });
-
-//     socket.on("disconnect", () => {
-//         Object.keys(userSockets).forEach((key) => {
-//             if (userSockets[key] === socket.id) {
-//                 delete userSockets[key];
-//             }
-//         });
-//     });
-// });
-
-// /**
-//  * Create Challenge (Async)
-//  */
-// app.post("/challenge", (req, res) => {
-//     const { from, to } = req.body;
-
-//     const id = Date.now().toString();
-//     challenges[id] = { from, to, status: "PENDING" };
-
-//     const receiverSocket = userSockets[to];
-//     if (receiverSocket) {
-//         io.to(receiverSocket).emit("challenge_received", {
-//             challengeId: id,
-//             from,
-//         });
-//     }
-
-//     res.json({ challengeId: id });
-// });
-
-// /**
-//  * Respond to Challenge
-//  */
-// app.post("/challenge/respond", (req, res) => {
-//     const { challengeId, accepted } = req.body;
-
-//     const challenge = challenges[challengeId];
-//     if (!challenge) {
-//         return res.status(404).json({ error: "Challenge not found" });
-//     }
-
-//     challenge.status = accepted ? "ACCEPTED" : "DECLINED";
-
-//     const senderSocket = userSockets[challenge.from];
-//     if (senderSocket) {
-//         io.to(senderSocket).emit("challenge_response", {
-//             challengeId,
-//             accepted,
-//         });
-//     }
-
-//     res.json({ success: true });
-// });
-
-// server.listen(3000, () => {
-//     console.log("Backend running on http://localhost:3000");
-// });
-
-
-
-
-
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
@@ -98,13 +11,23 @@ app.use(express.json());
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-const sockets = {};       // userId → socketId
-const pushTokens = {};   // userId → expo push token
-const challenges = {};   // challengeId → challenge
+const sockets = {};
+const pushTokens = {};
+const challenges = {};
 
 io.on("connection", (socket) => {
     socket.on("register", (userId) => {
         sockets[userId] = socket.id;
+    });
+
+    socket.on("session_end", ({ challengeId }) => {
+        const c = challenges[challengeId];
+        if (c) {
+            const other = sockets[c.to] === socket.id ? c.from : c.to;
+            if (sockets[other]) {
+                io.to(sockets[other]).emit("session_terminated", { challengeId });
+            }
+        }
     });
 
     socket.on("disconnect", () => {
@@ -148,7 +71,6 @@ app.post("/challenge/respond", async (req, res) => {
 
     c.status = accepted ? "ACCEPTED" : "DECLINED";
 
-    // Notify Initiator (c.from)
     if (sockets[c.from]) {
         io.to(sockets[c.from]).emit("challenge_response", { challengeId, accepted });
     } else if (pushTokens[c.from]) {

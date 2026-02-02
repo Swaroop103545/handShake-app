@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { socket } from "../socket/socket";
-import { useState, useEffect } from "react";
+import { Colors } from "../utils/theme";
+import { Sizes } from "../utils/sizes";
 
 export function ActiveStateScreen({ userId, challengeId, onExit }: { userId: string, challengeId: string, onExit: () => void }) {
     return (
@@ -24,58 +24,58 @@ export function ActiveStateScreen({ userId, challengeId, onExit }: { userId: str
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#0f172a",
+        backgroundColor: Colors.background,
         justifyContent: "center",
         alignItems: "center",
-        padding: 20,
+        padding: Sizes.spacing.md,
     },
     content: {
         alignItems: "center",
-        marginBottom: 40,
+        marginBottom: Sizes.spacing.xxl,
     },
     title: {
-        fontSize: 32,
+        fontSize: Sizes.font.xl,
         fontWeight: "bold",
         color: "#f8fafc",
-        marginBottom: 10,
+        marginBottom: Sizes.spacing.sm,
         textAlign: "center",
     },
     subtitle: {
-        fontSize: 18,
-        color: "#94a3b8",
-        marginBottom: 30,
+        fontSize: Sizes.font.lg,
+        color: Colors.textMuted,
+        marginBottom: Sizes.spacing.xl,
         textAlign: "center",
     },
     statusBadge: {
-        backgroundColor: "#22c55e",
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 20,
-        marginBottom: 20,
+        backgroundColor: Colors.primary,
+        paddingHorizontal: Sizes.spacing.md,
+        paddingVertical: Sizes.spacing.sm,
+        borderRadius: Sizes.radius.xl,
+        marginBottom: Sizes.spacing.md,
     },
     statusText: {
-        color: "white",
+        color: Colors.text,
         fontWeight: "bold",
-        fontSize: 16,
+        fontSize: Sizes.font.base,
     },
     info: {
-        fontSize: 14,
-        color: "#475569",
+        fontSize: Sizes.font.sm,
+        color: Colors.textSubtle,
     },
     exitButton: {
-        backgroundColor: "#ef4444",
-        paddingHorizontal: 40,
-        paddingVertical: 15,
-        borderRadius: 30,
+        backgroundColor: Colors.secondary,
+        paddingHorizontal: Sizes.spacing.xxl,
+        paddingVertical: Sizes.spacing.base,
+        borderRadius: Sizes.radius.xl,
         elevation: 5,
-        shadowColor: "#000",
+        shadowColor: Colors.backgroundDark,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
     },
     exitButtonText: {
-        color: "white",
-        fontSize: 18,
+        color: Colors.text,
+        fontSize: Sizes.font.lg,
         fontWeight: "bold",
     },
 });
